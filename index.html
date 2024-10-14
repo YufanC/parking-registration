@@ -154,30 +154,37 @@
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            
-            // Generate a unique key for the new registration
-            const newRegistrationKey = database.ref().child('registrations').push().key;
-            
-            // Write the new registration's data simultaneously in the registrations list and the user's registration list.
-            const updates = {};
-            updates['/registrations/' + newRegistrationKey] = {
-                name: name,
-                email: email,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            };
+            registrationsRef.once('value').then((snapshot) => {
+                if (snapshot.numChildren() >= 3) {
+                    document.getElementById('message').textContent = '抱歉，停车位登记已满。| Sorry, parking registration is full.';
+                    return;
+                }
 
-            database.ref().update(updates)
-                .then(() => {
-                    document.getElementById('message').textContent = '登记成功！ | Registration successful!';
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+
+                registrationsRef.push({
+                    name: name,
+                    email: email,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                }).then(() => {
+                    document.getElementById('message').textContent = '登记成功！| Registration successful!';
                     document.getElementById('registrationForm').reset();
-                })
-                .catch((error) => {
-                    console.error("Error writing registration: ", error);
-                    document.getElementById('message').textContent = '登记失败，请重试。 | Registration failed, please try again.';
+                }).catch((error) => {
+                    document.getElementById('message').textContent = '发生错误，请稍后再试。| An error occurred, please try again later.';
+                    console.error('Error:', error);
                 });
+            });
         });
+
+        // 检查是否已满
+        registrationsRef.on('value', (snapshot) => {
+            if (snapshot.numChildren() >= 3) {
+                document.getElementById('registrationForm').style.display = 'none';
+                document.getElementById('message').textContent = '停车位登记已满。| Parking registration is full.';
+            }
+        });
+        
     </script>
 <script>window.parent.postMessage({ action: "ready" }, "*"); 
  
