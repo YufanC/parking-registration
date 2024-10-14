@@ -182,7 +182,7 @@
         registrationsRef.on('value', (snapshot) => {
             if (snapshot.numChildren() >= 15) {
                 document.getElementById('registrationForm').style.display = 'none';
-                document.getElementById('message').textContent = '停车位登记已满。| Parking registration is full.';
+                document.getElementById('message').textContent = '抱歉，停车位登记已满。| Sorry, parking registration is full.';
             }
         });
         
