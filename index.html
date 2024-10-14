@@ -6,16 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>停车位登记 | Parking Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .banner-container {
+            width: 70%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .banner-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <!-- PHUSE Banner Image -->
-    <div class="w-full">
-        <img src="generic_sde.jpg" alt="PHUSE Share Single Day Events" class="w-full">
+    <div class="banner-container">
+        <img src="generic_sde.jpg" alt="PHUSE Share Single Day Events" class="banner-image">
     </div>
 
     <div class="p-8">
         <div class="max-w-md mx-auto">
-            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">停车位登记系统<br><span class="text-lg font-normal">Parking Registration System</span></h1>
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">PHUSE SDE 2024 停车位登记<br><span class="text-lg font-normal">PHUSE SDE 2024 Parking Registration</span></h1>
             
             <div class="bg-white rounded-xl shadow-md overflow-hidden">
                 <div class="p-8">
@@ -48,29 +60,5 @@
     <script>
         // Your Firebase configuration and JavaScript code here
     </script>
-<script>window.parent.postMessage({ action: "ready" }, "*"); 
- 
-window.console = new Proxy(console, {
-  get(target, prop) {
-    if (['log', 'warn', 'error'].includes(prop)) {
-      return new Proxy(target[prop], {
-        apply(fn, thisArg, args) {
-          fn.apply(thisArg, args);
-          window.parent.postMessage({ action: 'console', 
-            type: prop, 
-            args: args.map((arg) => {
-              try {
-                return JSON.stringify(arg).replace(/^["']|["']$/g, '');
-              } catch (e) {
-                return arg;
-              }
-            }) 
-          }, '*');
-        }
-      });
-    }
-    return target[prop];
-  }
-});
-</script></body>
+</body>
 </html>
