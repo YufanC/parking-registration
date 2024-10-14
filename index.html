@@ -150,7 +150,8 @@
 
         // Get a reference to the database service
         const database = firebase.database();
-
+        const registrationsRef = database.ref('registrations');
+        
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
