@@ -157,7 +157,7 @@
             e.preventDefault();
             
             registrationsRef.once('value').then((snapshot) => {
-                if (snapshot.numChildren() >= 20) {
+                if (snapshot.numChildren() >= 3) {
                     document.getElementById('message').textContent = '抱歉，停车位登记已满。| Sorry, parking registration is full.';
                     return;
                 }
@@ -181,7 +181,7 @@
 
         // 检查是否已满
         registrationsRef.on('value', (snapshot) => {
-            if (snapshot.numChildren() >= 20) {
+            if (snapshot.numChildren() >= 3) {
                 document.getElementById('registrationForm').style.display = 'none';
                 document.getElementById('message').textContent = '抱歉，停车位登记已满。| Sorry, parking registration is full.';
             }
